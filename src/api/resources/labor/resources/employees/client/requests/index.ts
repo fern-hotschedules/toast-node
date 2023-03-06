@@ -1,0 +1,9 @@
+export { EmployeesRequest } from "./EmployeesRequest";
+export { EmployeeRequest } from "./EmployeeRequest";
+export { InformationAboutOneEmployeeRequest } from "./InformationAboutOneEmployeeRequest";
+export { DeleteEmployeeRequest } from "./DeleteEmployeeRequest";
+export { EmployeeInformationRequest } from "./EmployeeInformationRequest";
+export { ReplaceAnExternalIdentifierRequest } from "./ReplaceAnExternalIdentifierRequest";
+export { ExternalIdentifierRequest } from "./ExternalIdentifierRequest";
+export { AJobsListRequest } from "./AJobsListRequest";
+export { WageOverridesRequest } from "./WageOverridesRequest";
