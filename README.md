@@ -1,4 +1,4 @@
-# {Company} Node Library
+# Toast Node Library
 
 [![npm shield](https://img.shields.io/npm/v/@fern-api/{company})](https://www.npmjs.com/package/@fern-api/{company})
 
@@ -6,7 +6,7 @@ The {Company} Node.js library provides access to the {Company} API from JavaScri
 
 ## Documentation
 
-API reference documentation is available [here](docs_url).
+API reference documentation is available [here](https://doc.toasttab.com/openapi/).
 
 ## Usage
 
