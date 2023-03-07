@@ -4,10 +4,10 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import { Auth } from "./api/resources/auth/client/Client";
 import { Config } from "./api/resources/config/client/Client";
 import { Labor } from "./api/resources/labor/client/Client";
 import { Orders } from "./api/resources/orders/client/Client";
+import { Auth } from "./api/resources/auth/client/Client";
 import { Menus } from "./api/resources/menus/client/Client";
 
 export declare namespace HotschedulesToastClient {
@@ -19,12 +19,6 @@ export declare namespace HotschedulesToastClient {
 
 export class HotschedulesToastClient {
     constructor(private readonly options: HotschedulesToastClient.Options) {}
-
-    private _auth: Auth | undefined;
-
-    public get auth(): Auth {
-        return (this._auth ??= new Auth(this.options));
-    }
 
     private _config: Config | undefined;
 
@@ -42,6 +36,12 @@ export class HotschedulesToastClient {
 
     public get orders(): Orders {
         return (this._orders ??= new Orders(this.options));
+    }
+
+    private _auth: Auth | undefined;
+
+    public get auth(): Auth {
+        return (this._auth ??= new Auth(this.options));
     }
 
     private _menus: Menus | undefined;

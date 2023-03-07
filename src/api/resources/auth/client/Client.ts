@@ -4,7 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import { Authentication } from "../resources/authentication/client/Client";
+import { HotschedulesToast } from "@fern-api/toast";
+import urlJoin from "url-join";
+import * as serializers from "../../../../serialization";
+import * as errors from "../../../../errors";
 
 export declare namespace Auth {
     interface Options {
@@ -16,9 +19,51 @@ export declare namespace Auth {
 export class Auth {
     constructor(private readonly options: Auth.Options) {}
 
-    private _authentication: Authentication | undefined;
+    /**
+     * Returns an authentication token that your Toast API client can present
+     * when using other Toast platform APIs.
+     *
+     */
+    public async getToken(
+        request: HotschedulesToast.auth.AuthenticationRequest
+    ): Promise<HotschedulesToast.auth.AuthenticationResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                this.options.environment ?? environments.HotschedulesToastEnvironment.Production,
+                "/authentication/login"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
+            },
+            body: await serializers.auth.AuthenticationRequest.jsonOrThrow(request),
+        });
+        if (_response.ok) {
+            return await serializers.auth.AuthenticationResponse.parseOrThrow(
+                _response.body as serializers.auth.AuthenticationResponse.Raw,
+                { allowUnknownKeys: true }
+            );
+        }
 
-    public get authentication(): Authentication {
-        return (this._authentication ??= new Authentication(this.options));
+        if (_response.error.reason === "status-code") {
+            throw new errors.HotschedulesToastError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.HotschedulesToastError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.HotschedulesToastTimeoutError();
+            case "unknown":
+                throw new errors.HotschedulesToastError({
+                    message: _response.error.errorMessage,
+                });
+        }
     }
 }

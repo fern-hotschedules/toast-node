@@ -1,6 +1,6 @@
 {
     "name": "@fern-api/toast",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "private": false,
     "repository": "https://github.com/fern-hotschedules/toast-node",
     "files": [
