@@ -5,7 +5,7 @@
 import { HotschedulesToast } from "@fern-api/toast";
 
 /**
- * Defines a payment.
+ * Defines a payment from a customer.
  */
 export interface Payment extends HotschedulesToast.orders.ExternalReference {
     /** The date on which the payment was made. */
